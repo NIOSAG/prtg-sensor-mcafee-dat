@@ -1,91 +1,40 @@
 <#
 .SYNOPSIS
-Outputs a PRTG XML structure with a Pure Storage Array capacity datadfsfsdfafdsadsadaasd
+Outputs a PRTG XML structure with a McAfee DAT Version difference between the localy installed version and the version from the online repository
 
 .DESCRIPTION
-Provides a look at the global array capaicty metrics and at the inidividual
-volumes consumption levels. If account credentials are provided it will obtain an 
-API Key from the array, if an API key is provided it skips this step. It is encouraged
-to provide an API key for the array so that account credentials dont need to be provided
+Get the newest DAT-File Version online from the official McAfee Repository and checks if the installed DAT-File Version is different than the online Version
+Outputs the difference between the two versions in a PRTG XML structure with predefined Error and Warning Limits
 
-Written for Purity REST API 1.6
+Can handle McAfee DAT v2 and v3 files
 
 .INSTRUCTIONS
 1) Copy the script file into the PRTG Custom EXEXML sensor directory C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\EXEXML
-        - Get-PureFA-Sensor.ps1 (PowerShell Sensor Script)
-2) Copy the Lookup files into the PRTG lookup file directory C:\Program Files (x86)\PRTG Network Monitor\lookups\custom
-        - prtg.standardlookups.purestorage.drivestatus.ovl (Drive status value lookup file)
-        - prtg.standardlookups.purestorage.hardwarestatus.ovl (Hardware status value lookup file)
-3) Restart the 'PRTG Core Server Service' windows service to load the custom lookup files
-3) Create Sensor Custom EXE/ Script Advanced Sensor for each sensor you wish to monitor (refer Scope) and give it a meaniful name
-4) Set Parameters for sensor
-    - (ArrayAddress) Target Array management DNS name or IP address
-    - (UserName) and (Password) or (APIKey) to gain access 
-    - (Scope) to set which element to monitor with Sensor
-   e.g. -arrayaddress '%host' -scope 'hardware' -apikey '3bdf3b60-f0c0-fa8a-83c1-b794ba8f562c'
-5) For the monitoring of individual volumes a sensor is created for each volume. As such the scope option 'volumemanage' is required to maintain these
-   sensors. THis then copies itself to a new sensor assigned to the holding device and updates the paramdeters accordingly. It also removes sensors of any 
-   volume that has been deleted 
-    - Create 'VolumeManage' sensor with the additional parameters -prtghosturl -prtguser -prtgpassword -DeviceID -SensorID
-
+        - prtg-sensor-mcafee-dat.ps1 (PowerShell Sensor Script)
+3) Create Sensor Custom EXE/ Script Advanced Sensor for each server you wish to monitor (refer Scope) and give it a meaningful name
+4) Set parameters for sensor
+    - (Host) Target Array management DNS name or IP address
+    - (Username) and (Password) to gain access 
+   e.g. -host %host -username %windowsuser -password "%windowspassword"
 
 .NOTES
-Author: lloydy@purestorage.com
-Version: 1.10
-Date: 6/9/2017
+Authors: claudio.stocker@nios.ch, daniel.scarcella@nios.ch 
+Website: https://nios.ch/
+Version: 1.2
+Date: 29.10.2021
 
-.PARAMETER ArraryAddress
-DNS Name or IP Address of the FlashArray
+.PARAMETER Hostname
+FQDN or IP address of the server running McAfee VirusScan Enterprise and McAfee Endpoint Security
 
 .PARAMETER UserName
-The name of the account to be used to access the array (not required if API token provided)
+The name of the account to be used to access the Server
 
 .PARAMETER Password
 The password of the account 
 
-.PARAMETER APIKey
-An API Key generated from within the Purity console linked to the account to be used (not required if UserName and Password supplied)
-
-.PARAMETER Scope
-The scope defines the details to be monitored from the array
-Supported Scope Values:
-
--   Capacity
--   Performance      
--   Hardware
--   Drive
--   VolumeManage (creates a sensor for each volume)
--   Volume (Sensor created dynamically)
--   HostGroup (not currently supported)
-
-.PARAMETER Item
-For monitoring of volumes and hostgroups lets the sensor have the targetted item specified
-
-.PARAMETER SensorID
-For new sensor creation for volumes and host groups a copy of the calling sensor is created. This needs to be done with the SensorID so use 
-the parameter with the %sensorid which passes the sensorid through. This is required as the API does not currently support the creation of new sensors :(
-
-.PARAMETER DeviceID
-For new sensor creation this is the DeviceID of the parent device. Use the %deviceid parameter in the arguments
-
-.PARAMETER PRTGHostURL
-The URL to be used to make API calls back to the PRTG host to manage sensors eg http://prtg.domain.local, https://prtg.domain.local, https://prtg.domain.local:8443
-
-.PARAMETER PRTGUser
-Account to access PRTG API Service
-
-.PARAMETER PRTGPassword
-Password for account used to access PRTG API Service
-
-.PARAMETER DebugDump
-Will provide console prompts duering execution. Can not be enabled when running a a sensor
-
 .EXAMPLES
-Array Capacity Monitor
-C:\PS>Get_PureFA-Sensor.ps1 -ArrayAddress 1.2.3.4 -Username pureuser -Password purepassword -Scope Array
-Volume Sensor Manager
-C:\PS>Get_PureFA-Sensor.ps1 -ArrayAddress 1.2.3.4 -Username pureuser -Password purepassword -Scope VolumeManage -deviceid 1234 -sensorid 4321 -PRTGHostURL https://prtg.domain.local -PRTGUser admin -PRTGPassword password
-
+McAfee DAT Version
+C:\PS>prtg-sensor-mcafee-dat.ps1 -host server01 -username Administrator -password TopSecretPW
 
 #>
 
@@ -135,7 +84,6 @@ function Check-OnlineDAT($daturl, $datregex) {
     }
 }
 
-
 $InstalledDAT = Check-InstalledDAT -regkey $v2regkey -regvalue $v2regvalue
 if ($InstalledDAT) {
     $daturl = $v2daturl
@@ -153,5 +101,15 @@ if ($InstalledDAT) {
 }
 $OnlineDAT = Check-OnlineDAT -daturl $daturl -datregex $datregex
 
-# Calculate and return result
-Write-Host "$([int]$OnlineDAT-[int]$InstalledDAT):$($DATver)"
+Write-Host "<prtg>"
+    Write-Host "<result>"
+    Write-Host "<channel>DAT Version</channel>"
+    Write-Host "<value>$([int]$OnlineDAT-[int]$InstalledDAT):$($DATver)</value>"
+    Write-Host "<LimitMaxError>2</LimitMaxError>"
+    Write-Host "<LimitMinError>-2</LimitMinError>"
+    Write-Host "<LimitMaxWarning>1</LimitMaxWarning>"
+    Write-Host "<LimitMinWarning>-1</LimitMinWarning>"
+    Write-Host "<LimitMode>1</LimitMode>"    
+    Write-Host "</result>"
+Write-Host "</prtg>"
+exit $code 
