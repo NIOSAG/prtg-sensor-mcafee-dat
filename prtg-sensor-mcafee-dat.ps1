@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Outputs a PRTG XML structure with a Pure Storage Array capacity data
+Outputs a PRTG XML structure with a Pure Storage Array capacity datadfsfsdfafds
 
 .DESCRIPTION
 Provides a look at the global array capaicty metrics and at the inidividual
