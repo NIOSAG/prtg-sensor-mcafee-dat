@@ -6,6 +6,6 @@ Dsa
 dsa
 ## DAS
 tEST
-![Alt text](prtg-sensor-mcafee-dat-configuration.PNG "Configuration")
+![Configuration](prtg-sensor-mcafee-dat-configuration.PNG "Configuration")
 
 dsa
