@@ -7,6 +7,6 @@ Dsa
 dsa
 ## DAS
 tEST
-![Configuration](prtg-sensor-mcafee-dat-configuration.PNG "Configuration")
+![Configuration](https://github.com/NIOSAG/prtg-sensor-mcafee-dat/blob/master/prtg-sensor-mcafee-dat-configuration.PNG "Configuration")
 
 dsa
