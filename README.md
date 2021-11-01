@@ -25,7 +25,7 @@ Select the parent device on which you want to check the version of the McAfee DA
 ### Screenshot of Sensor creation
 ![McAfee DAT PRG Sensor creation](https://github.com/NIOSAG/prtg-sensor-mcafee-dat/blob/master/prtg-sensor-mcafee-dat-configuration.PNG?raw=true)
 
-## Screenshot
+### Screenshot of Sensor overview
 ![McAfee DAT PRG Sensor overview](https://github.com/NIOSAG/prtg-sensor-mcafee-dat/blob/1de031a10fae612d0625d50a88a1d39fea64c46e/prtg-sensor-mcafee-dat-overview.PNG?raw=true)
 
 ## Troubleshooting
