@@ -9,15 +9,6 @@
 
 	 - prtg-sensor-mcafee-dat.ps1 (PowerShell Sensor Script)
 
- 2. Create Sensor Custom EXE/ Script Advanced Sensor for each server you
-    wish to monitor (refer Scope) and give it a meaningful name
-
- 3. Set parameters for sensor
-
-	 - (Host) Target Array management DNS name or IP address
-	 - (Username) and (Password) to gain access
-		 - e.g. -host %host -username %windowsuser -password "%windowspassword"
-
 ## Sensor creation
 
 
