@@ -1,3 +1,4 @@
+
 # McAfee DAT Sensor for PRTG
 
 ## Created by NIOS AG, https://nios.ch
@@ -20,7 +21,8 @@ Select the parent device on which you want to check the version of the McAfee DA
 - EXE result: For easier troubleshooting, it is advisable to store the result of the sensor in the logs directory, at a minimum if errors occure.
 
 ### Parameters
--host %host -username %windowsuser -password "%windowspassword"
+
+    -host %host -username %windowsuser -password "%windowspassword"
 
 ### Screenshot of Sensor creation
 ![McAfee DAT PRG Sensor creation](https://github.com/NIOSAG/prtg-sensor-mcafee-dat/blob/master/prtg-sensor-mcafee-dat-configuration.PNG?raw=true)
