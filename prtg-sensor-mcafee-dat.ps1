@@ -3,15 +3,15 @@
 Outputs a PRTG XML structure with a McAfee DAT Version difference between the localy installed version and the version from the online repository
 
 .DESCRIPTION
-Get the newest DAT-File Version online from the official McAfee Repository and checks if the installed DAT-File Version is different than the online Version
+This Script gets the newest DAT-File Version online from the official McAfee Repository and checks if the installed DAT-File Version is different than the online Version
 Outputs the difference between the two versions in a PRTG XML structure with predefined Error and Warning Limits
 
-Can handle McAfee DAT v2 and v3 files
+It can handle McAfee DAT v2 and v3 files
 
 .INSTRUCTIONS
 1) Copy the script file into the PRTG Custom EXEXML sensor directory C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\EXEXML
         - prtg-sensor-mcafee-dat.ps1 (PowerShell Sensor Script)
-3) Create Sensor Custom EXE/ Script Advanced Sensor for each server you wish to monitor (refer Scope) and give it a meaningful name
+2) Create Sensor Custom EXE/ Script Advanced Sensor for each server you wish to monitor (refer Scope) and give it a meaningful name
 4) Set parameters for sensor
     - (Host) Target Array management DNS name or IP address
     - (Username) and (Password) to gain access 
@@ -41,8 +41,8 @@ C:\PS>prtg-sensor-mcafee-dat.ps1 -host server01 -username Administrator -passwor
 param
 (
 	 [string]$hostname,
-	 [string]$username,
-	 [string]$password,
+     [string]$username,
+     [string]$password,
      [string]$authentication
 )
 
