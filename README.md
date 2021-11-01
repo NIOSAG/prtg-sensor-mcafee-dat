@@ -16,3 +16,8 @@
 ![McAfee DAT PRG Sensor overview](https://github.com/NIOSAG/prtg-sensor-mcafee-dat/blob/1de031a10fae612d0625d50a88a1d39fea64c46e/prtg-sensor-mcafee-dat-overview.PNG?raw=true)
 
 ## Troubleshooting
+If the sensors report errors please follow this steps to identity the cause:
+
+- Make sure that the sensor stores the EXE result in the file system, so that you can access the error message in the folder C:\ProgramData\Paessler\PRTG Network Monitor\Logs (Sensors).
+- Let the PRTG Sensor recheck the McAfee DAT Version.
+- Check the LOG files.
