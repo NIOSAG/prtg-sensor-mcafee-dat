@@ -10,7 +10,20 @@
 	 - prtg-sensor-mcafee-dat.ps1 (PowerShell Sensor Script)
 
 ## Sensor creation
+Select the parent device on which you want to check the version of the McAfee DAT and choose Add sensor. Select the sensor type EXE/Script Advanced in the group Custom sensors. Adjust the following settings:
 
+- Name: Enter a name that allows for easy identification of the sensor.
+- Tags: Add custom Tag like "McAfee"
+- EXE/Script: Select the corresponding script "prtg-sensor-mcafee-dat.ps1"
+- Parameters: Set the parameters as required. See below for further Information and an example.
+- Security context: Assert that the script is run under a useraccount which can access the server
+- EXE result: For easier troubleshooting, it is advisable to store the result of the sensor in the logs directory, at a minimum if errors occure.
+
+### Parameters
+-host %host -username %windowsuser -password "%windowspassword"
+
+### Screenshot of Sensor creation
+![McAfee DAT PRG Sensor creation](https://github.com/NIOSAG/prtg-sensor-mcafee-dat/blob/master/prtg-sensor-mcafee-dat-configuration.PNG?raw=true)
 
 ## Screenshot
 ![McAfee DAT PRG Sensor overview](https://github.com/NIOSAG/prtg-sensor-mcafee-dat/blob/1de031a10fae612d0625d50a88a1d39fea64c46e/prtg-sensor-mcafee-dat-overview.PNG?raw=true)
