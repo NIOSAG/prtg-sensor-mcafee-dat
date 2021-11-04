@@ -22,7 +22,7 @@ It can handle McAfee DAT v2 (McAfee VirusScan Enterprise) and DAT v3 (McAfee End
 	- **EXE/Script:** Select the corresponding script "prtg-sensor-mcafee-dat.ps1"
 	- **Parameters:** Set the parameters as required. See below for further Information and an example.
 	- **Security Context:** Assert that the script is run under a useraccount which can access the server
-	- **Result Handling** For easier troubleshooting, it is advisable to store the result of the sensor in the logs directory, at a minimum if errors occure.
+	- **Result Handling:** For easier troubleshooting, it is advisable to store the result of the sensor in the logs directory, at a minimum if errors occure.
 
 ### Parameters
     -host %host -username %windowsuser -password "%windowspassword"
